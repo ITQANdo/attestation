@@ -1,86 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Include Select2 CSS -->
-    <link href="assets/select2.min.css" rel="stylesheet" />
-    <!-- Include jQuery -->
-    <script src="assets/jquery-3.6.0.min.js"></script>
-    <!-- Include Select2 JS -->
-    <script src="assets/select2.min.js"></script>
-    <style>
-        @page {
-            margin: 0;
-        }
 
-        body {
-            background: rgb(204, 204, 204);
-        }
+    <title>Crétateur des attestations de stage - ITQAN Labs</title>
 
-        page {
-            background: white;
-            display: block;
-            height: 267mm;
-            width: 210mm;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 15px;
-        }
+    <link href="assets/css/select2.min.css" rel="stylesheet" />
+    <link href="assets/css/main.css" rel="stylesheet" />
 
-        table,
-        tbody,
-        thead,
-        tr,
-        td {
-            border: none !important;
-        }
-
-        [item-stat] {
-            padding: 7px 0 7px 0;
-        }
-
-        [contentdynamic] {
-            background-color: yellow;
-            font-weight: bold;
-        }
-
-        @media print {
-
-            #header,
-            #main,
-            #footer {
-                *padding-left: 0;
-                *padding-right: 0;
-            }
-
-            [contentdynamic] {
-                background-color: transparent;
-                font-weight: normal;
-            }
-        }
-    </style>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/select2.min.js"></script>
+    <script src="assets/js/jspdf.umd.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
-    <div style="position:fixed;left:10px;top:10px;max-width: 350px;">
+    <div style="position:fixed;left:10px;top:10px;max-width: 350px;" id="internshipprocessor">
         <div style="background-color:white;padding:20px">
             <div item-stat style="text-align: center;font-weight: bold; font-size: 19px;margin-bottom: 10px;">Information de stagiaire </div>
             <div item-stat>
-                <input class="name" type="text" name="name" id="name" placeholder="Prénom" style="padding: 5px;margin:5px 0;" />
-                <input class="lastname" type="text" name="lastname" id="lastname" placeholder="Nom" style="padding: 5px;margin:5px 0;" />
+                Prénom: <input class="name" type="text" name="name" id="name" placeholder="Prénom" style="padding: 5px;margin:5px 0;" />
+                <br>
+                Nom: <input class="lastname" type="text" name="lastname" id="lastname" placeholder="Nom" style="padding: 5px;margin:5px 0;" />
             </div>
             <div item-stat style="padding: 5px 0;margin:5px 0;">
                 <label>
-                    <input type="radio" name="gender" value="male">Masculin </label>
+                    <input type="radio" name="gender" value="male">Homme</label>
                 <label>
-                    <input type="radio" name="gender" value="female">Féminin </label>
+                    <input type="radio" name="gender" value="female">Femme</label>
             </div>
             <div item-stat>
-                <input class="cin" type="text" name="cin" id="cin" placeholder="Numero de CIN" style="padding: 5px;margin:5px 0;" />
+                CIN: <input class="cin" type="text" name="cin" id="cin" placeholder="Numero de CIN" style="padding: 5px;margin:5px 0;" />
             </div>
             <div item-stat> Niveau: <select class="annee" name="annee" id="annee" style="padding: 5px;margin:5px 0;">
                     <option value="1ère année">1re année</option>
@@ -322,7 +275,7 @@
             </div>
         </div>
     </div>
-    <div style="position:fixed;left:1200px;top:10px;max-width: 350px;">
+    <div style="position:fixed;left:1200px;top:10px;max-width: 350px;" id="cvsprocessor">
         <div style="background-color:white;padding:20px"> Collez directement le contenu du fichier CSV <b>de 10 colonnes</b> ici <textarea id="csvTextarea" style="display: block;width: 100%;margin: 10px auto;" rows="17"></textarea>
             <div>
                 <button onclick="processCSV()">Process</button>
@@ -333,29 +286,35 @@
     <div class="pagecontainer" style="position:absolute; top:10px; left:380px;" id="page">
         <page id="page">
             <div id="header" style="padding: 10mm;">
-                <table>
+                <table width="100%">
                     <tbody>
                         <tr valign="top">
                             <td width="33%">
                                 <p>
-                                    <font color="#b7b7b7">
-                                        <font face="Cambria, serif">ITQAN Labs for Web Development and Internet Solution Services</font>
+                                    <font face="Cambria, serif">ITQAN Labs for Web
+                                        <br>
+                                        Development and Internet
+                                        <br>
+                                        Solution Services
                                     </font>
                                 </p>
                             </td>
-                            <td>
+                            <td width="33%">
                                 <p style="orphans: 0; widows: 0; margin-top: 0.06in" align="center">
                                     <img src="https://itqanlabs.com/wp-content/uploads/2022/10/ITQAN-v3-Logo-Single-2-1-1024x414-1.png" name="image1.png" width="173" height="70" border="0" align="bottom">
                                 </p>
                             </td>
                             <td width="33%">
                                 <p dir="rtl">
-                                    <font face="Arial">
+                                    <font face="Tajawal Medium, serif">
                                         <span lang="hi-IN">
-                                            <font color="#b7b7b7">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 12pt" size="3">شركة إتقان للبرمجة وتطوير خدمات الأنترنت</font>
+                                            <font face="Tajawal Medium">
+                                                <font style="font-size: 12pt" size="3">شركة إتقان للبرمجة
+                                                    <br>
+                                                    وتطوير خدمات و حلول
                                                 </font>
+                                                <br>
+                                                الأنترنت والواب
                                             </font>
                                         </span>
                                     </font>
@@ -365,7 +324,7 @@
                     </tbody>
                 </table>
             </div>
-            <div id="main" style="padding: 10mm;">
+            <div id="main" style="padding: 0 10mm 10mm;">
                 <p style="line-height: 100%; margin-top: 0.17in; margin-bottom: 0.17in" align="center">
                     <font color="#404040">
                         <font face="Calibri, serif">
@@ -375,9 +334,7 @@
                         </font>
                     </font>
                 </p>
-                <p style="margin-bottom: 0in; page-break-before: auto; page-break-after: auto">
-                    <br>
-                </p>
+                <br>
                 <p style="line-height: 150%; margin-top: 0.17in; margin-bottom: 0.17in">
                     <font face="Cambria, serif">
                         <font style="font-size: 20pt" size="5">Nous</font>
@@ -390,24 +347,24 @@
                 </p>
                 <p>
                     <font face="Cambria, serif">
-                        <font style="font-size: 14pt" size="4"> Le stagiaire a fait preuve d'une grande motivation, d'un esprit d'initiative et de sérieux dans l'accomplissement de ses missions. <span contentdynamic id="ilelle">Il/elle</span> a également su s'adapter rapidement à l'environnement de travail et faire preuve d'une bonne capacité d'analyse et de résolution de problèmes. </font>
+                        <font style="font-size: 14pt" size="4">Le stagiaire a fait preuve d'une grande motivation, d'un esprit d'initiative et de sérieux dans l'accomplissement de ses missions. <span contentdynamic id="ilelle">Il/elle</span> a également su s'adapter rapidement à l'environnement de travail et faire preuve d'une bonne capacité d'analyse et de résolution de problèmes. </font>
                     </font>
                 </p>
                 <p>
                     <font face="Cambria, serif">
-                        <font style="font-size: 14pt" size="4"> Le stage a permis <span contentdynamic class="name_text">PRENOM</span> de développer ses compétences en informatique et de mettre en pratique les connaissances acquises lors de sa formation. </font>
+                        <font style="font-size: 14pt" size="4">Le stage a permis <span contentdynamic class="name_text">PRENOM</span> de développer ses compétences en informatique et de mettre en pratique les connaissances acquises lors de sa formation. </font>
                     </font>
                 </p>
                 <p>
                     <font face="Cambria, serif">
-                        <font style="font-size: 14pt" size="4"> En conséquence, je recommande vivement <span contentdynamic id="monsieurmadame">Monsieur/Madame</span>
+                        <font style="font-size: 14pt" size="4">En conséquence, je recommande vivement <span contentdynamic id="monsieurmadame">Monsieur/Madame</span>
                             <span contentdynamic class="name_text">PRENOM</span> pour toute opportunité de stage ou d'emploi dans le domaine de l'informatique.
                         </font>
                     </font>
                 </p>
                 <p style="line-height: 150%; margin-top: 0.17in; margin-bottom: 0.17in">
                     <font face="Cambria, serif">
-                        <font style="font-size: 14pt" size="4">
+                        <font style="font-size: 13pt" size="4">
                             <i>Cette attestation est délivrée à l'intéressé(e) suivant sur sa demande pour servir et valoir ce que de droit.</i>
                         </font>
                     </font>
@@ -439,226 +396,40 @@
                     <font face="Cambria, serif">Ahmed Nefzaoui</font>
                 </p>
             </div>
-            <div id="footer" style="position:absolute; bottom: 0;left:0;right:0;padding: 10mm;">
+            <div id="footer" style="position:absolute; bottom: 0;left:0;right:0;padding: 10mm 10mm 5mm;">
                 <table>
                     <tbody>
                         <tr valign="top">
-                            <td width="40%">
-                                <p>
-                                    <font color="#999999">
-                                        <font face="Calibri, serif">© ALL RIGHTS RESERVED to </font>
-                                    </font>
-                                    <font color="#999999">
-                                        <font face="Calibri, serif">
-                                            <b>ITQAN Labs</b>
-                                        </font>
-                                    </font>
-                                    <font color="#999999">
-                                        <font face="Calibri, serif"> LLC - </font>
-                                    </font>
-                                    <a href="http://www.itqanlabs.com/">
-                                        <font color="#666666">
-                                            <font face="Tajawal Medium, serif">
-                                                <u>www.itqanlabs.com</u>
-                                            </font>
-                                        </font>
-                                    </a>
-                                    <font color="#999999">
-                                        <font face="Calibri, serif">
-                                            <br> Cyberpark Tozeur, 2200, Tunisia <br> Email:
-                                        </font>
-                                    </font>
-                                    <a href="mailto:hello@itqanlabs.com">
-                                        <font color="#666666">
-                                            <font face="Tajawal Medium, serif">
-                                                <u>hello@itqanlabs.com</u>
-                                            </font>
-                                        </font>
-                                    </a>
-                                    <font color="#999999">
-                                        <font face="Calibri, serif">
-                                            <br> Phone (TN): 27 771 623 <br> Phone (Intl): +1 (202) 773-9571 <br> Registration ID / MF: 1599801F
-                                        </font>
-                                    </font>
+                            <td width="30%">
+                                <p class="ltrcopyright">
+                                    © ALL RIGHTS RESERVED to ITQAN Labs LLC - www.itqanlabs.com
+                                    <br>
+                                    Cyberpark Tozeur, 2200, Tunisia
+                                    <br>
+                                    Email: hello@itqanlabs.com
+                                    <br>
+                                    Phone (TN): 27 771 623
+                                    <br>
+                                    Phone (Intl): +1 (202) 773-9571
+                                    <br>
+                                    Registration ID / MF: 1599801F
                                 </p>
                             </td>
-                            <td width="40%">
-                                <p dir="rtl" style="" align="right">
-                                    <font color="#999999">
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">© </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">جميع الحقوق محفوظة لشركة </font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font color="#999999">
-                                            <font face="Tajawal">
-                                                <font style="font-size: 10pt" size="2">إتقان</font>
-                                            </font>
-                                        </font>
-                                        <font color="#999999">
-                                            <font face="Tajawal Medium">
-                                                <font style="font-size: 10pt" size="2"> محدودة المسؤولية</font>
-                                            </font>
-                                        </font>
-                                    </font>
-                                    <font color="#999999">
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">
-                                                <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">الموقع الإلكتروني</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">: </font>
-                                        </font>
-                                    </font>
-                                    <a href="http://www.itqanlabs.com/">
-                                        <font color="#666666">
-                                            <font face="Tajawal Medium, serif">
-                                                <font style="font-size: 10pt" size="2">
-                                                    <u>www.itqanlabs.com</u>
-                                                </font>
-                                            </font>
-                                        </font>
-                                    </a>
-                                    <font color="#999999">
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">
-                                                <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">العنوان</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">: </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">مركز العمل عن بعد، </font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">2200 </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">توزر، الجمهورية التونسية</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">
-                                                <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">البريد الإلكتروني</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">: </font>
-                                        </font>
-                                    </font>
-                                    <a href="mailto:hello@itqanlabs.com">
-                                        <font color="#666666">
-                                            <font face="Tajawal Medium, serif">
-                                                <font style="font-size: 10pt" size="2">
-                                                    <u>hello@itqanlabs.com</u>
-                                                </font>
-                                            </font>
-                                        </font>
-                                    </a>
-                                    <font color="#999999">
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">
-                                                <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">الهاتف </font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">(</font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">تونس</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">): 27771623 <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">الهاتف </font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">(</font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">دولي</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">): 0012027739571 <br>
-                                            </font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">رقم تسجيل الشركة</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">/</font>
-                                        </font>
-                                        <font face="Arial">
-                                            <span lang="hi-IN">
-                                                <font face="Tajawal Medium">
-                                                    <font style="font-size: 10pt" size="2">الترقيم الضريبي</font>
-                                                </font>
-                                            </span>
-                                        </font>
-                                        <font face="Tajawal Medium, serif">
-                                            <font style="font-size: 10pt" size="2">: 1599801F</font>
-                                        </font>
-                                    </font>
+                            <td width="30%">
+                                <p dir="rtl" align="right" class="rtlcopyright">
+                                    © جميع الحقوق محفوظة لشركة إتقان محدودة المسؤولية
+                                    <br>
+                                    الموقع الإلكتروني : www.itqanlabs.com
+                                    <br>
+                                    العنوان : مركز العمل عن بعد، 2200 توزر، الجمهورية التونسية
+                                    <br>
+                                    البريد الإلكتروني : hello@itqanlabs.com
+                                    <br>
+                                    الهاتف ( تونس ): 27771623
+                                    <br>
+                                    الهاتف ( دولي ): 0012027739571
+                                    <br>
+                                    رقم تسجيل الشركة / الترقيم الضريبي : 1599801F
                                 </p>
                             </td>
                         </tr>
@@ -667,82 +438,6 @@
             </div>
         </page>
     </div>
-    <script src="assets/jspdf.umd.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputs = document.querySelectorAll('input[type="text"], input[type="date"], select');
-            inputs.forEach((input) => {
-                if (input.nodeName === 'SELECT') {
-                    var s = $(input).select2();
-                    $(input).on('select2:select', updateSpans);
-                }
-                input.addEventListener('input', updateSpans);
-                input.addEventListener('change', updateSpans);
-            });
-            $('input[type=radio][name=gender]').change(function () {
-                if (this.value === 'male') {
-                    $('#monsieurmadame').text('Monsieur');
-                    $('#ilelle').text('Il');
-                    $('#etud').text('étudiant');
-                } else if (this.value === 'female') {
-                    $('#monsieurmadame').text('Madame/Mademoiselle');
-                    $('#ilelle').text('Elle');
-                    $('#etud').text('étudiante');
-                }
-            });
-
-            function updateSpans(event) {
-                const target = event.target;
-                const textSpans = document.querySelectorAll(`.${target.id}_text`);
-                if (target.type === "date" && target.value) {
-                    try {
-                        const date = new Date(target.value);
-                        const formattedDate = new Intl.DateTimeFormat('fr-TN', {
-                            month: 'long',
-                            day: 'numeric',
-                            year: 'numeric'
-                        }).format(date);
-                        textSpans.forEach((span) => {
-                            span.textContent = formattedDate;
-                        });
-                    } catch (e) {
-                        console.error(`Error formatting date: ${e.message}`);
-                    }
-                } else {
-                    textSpans.forEach((span) => {
-                        span.textContent = event.params ? event.params.data.text : $(target).val();
-                    });
-                }
-            }
-        });
-
-        function printDiv(divName) {
-            const printContents = document.getElementById(divName).innerHTML;
-            const originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-
-        function processCSV() { }
-
-        function exportToPdf(mydiv) {
-            var doc = new jsPDF();
-            var elementHandler = {
-                '#ignorePDF': function (element, renderer) {
-                    return true;
-                }
-            };
-            var source = window.document.getElementById(mydiv);
-            doc.fromHTML(source, 15, 15, {
-                'width': 180,
-                'elementHandlers': elementHandler
-            });
-            let filename = $('.name_text').val() + $('.lastname_text').val() + '_stage' + $('.typestage_text').val() + '.pdf';
-            let finalizedFilename = filename.replace(' ', '');
-            doc.save(finalizedFilename);
-        }
-    </script>
 </body>
 
 </html>

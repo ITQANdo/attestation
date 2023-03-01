@@ -1,0 +1,105 @@
+@font-face {
+	font-family: "Tajawal";
+	src: url("font/Tajawal-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Tajawal";
+	src: url("font/Tajawal-Medium.ttf") format("truetype");
+	font-weight: medium;
+	font-style: normal;
+}
+
+@page {
+	margin: 0;
+}
+
+body {
+	background: rgb(204, 204, 204);
+}
+
+page {
+	background: white;
+	display: block;
+	height: 267mm;
+	width: 210mm;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+}
+
+table,
+tbody,
+thead,
+tr,
+td {
+	border: none !important;
+}
+
+[item-stat] {
+	padding: 7px 0 7px 0;
+}
+
+[contentdynamic] {
+	background-color: yellow;
+	font-weight: bold;
+}
+
+#header,
+#header *,
+#footer,
+#footer * {
+	color: #b7b7b7 !important;
+	background-color: #fff !important;
+	background-image: none !important;
+}
+
+.ltrcopyright {
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.rtlcopyright {
+	font-family: "Tajawal", Serif;
+	font-size: 14px;
+}
+
+@media print {
+	body * {
+		visibility: hidden;
+	}
+	#cvsprocessor,
+	#internshipprocessor {
+		display: none;
+	}
+	#page,
+	#page * {
+		visibility: visible;
+	}
+
+	#page {
+		position: absolute;
+		top: 0 !important;
+		right: 0;
+		bottom: 0;
+		left: 0 !important;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	#header,
+	#header *,
+	#footer,
+	#footer * {
+		color: #b7b7b7 !important;
+		background-color: #fff !important;
+		background-image: none !important;
+	}
+
+	[contentdynamic] {
+		background-color: transparent;
+		font-weight: normal;
+	}
+}
