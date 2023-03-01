@@ -49,10 +49,10 @@ function printDiv(divName) {
 	const printContents = document.getElementById(divName).innerHTML;
 	const originalContents = document.body.innerHTML;
 	document.body.innerHTML = printContents;
-    let filename = `ATTESTATION - ${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
-    document.title = filename;
+	let filename = `ATTESTATION - ${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
+	document.title = filename;
 	window.print();
-    document.title = "Crétateur des attestations de stage - ITQAN Labs";
+	document.title = "Crétateur des attestations de stage - ITQAN Labs";
 	document.body.innerHTML = originalContents;
 }
 
