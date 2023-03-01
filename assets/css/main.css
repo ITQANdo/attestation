@@ -14,6 +14,7 @@
 
 @page {
 	margin: 0;
+    size: A4;
 }
 
 body {
@@ -23,8 +24,8 @@ body {
 page {
 	background: white;
 	display: block;
-	height: 267mm;
-	width: 210mm;
+    width: 210mm;
+    height: 297mm;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 15px;
