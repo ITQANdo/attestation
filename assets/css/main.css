@@ -66,13 +66,22 @@ td {
 }
 
 @media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-color: #fff;
+        background-image: none;
+    }
+
 	body * {
 		visibility: hidden;
 	}
+
 	#cvsprocessor,
 	#internshipprocessor {
 		display: none;
 	}
+
 	#page,
 	#page * {
 		visibility: visible;
