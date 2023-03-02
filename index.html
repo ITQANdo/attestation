@@ -15,11 +15,10 @@
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/js/jspdf.umd.min.js"></script>
     <script src="assets/js/papaparse.js"></script>
-    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
-    <div style="position:fixed;left:10px;top:10px;max-width: 350px;" id="internshipprocessor">
+    <div style="position:fixed;left:10px;top:10px;max-width: 350px;font-family: arial,sans-serif;" id="internshipprocessor">
         <div style="background-color:white;padding:20px">
             <div item-stat style="text-align: center;font-weight: bold; font-size: 19px;margin-bottom: 10px;">Information de stagiaire </div>
             <div item-stat>
@@ -276,17 +275,22 @@
             </div>
         </div>
     </div>
-    <div style="position:fixed;left:1200px;top:10px;max-width: 350px;" id="cvsprocessor">
-        <div style="background-color:white;padding:20px"> Collez directement le contenu du fichier CSV <b>de 10 colonnes</b> ici <textarea id="csvTextarea" style="display: block;width: 100%;margin: 10px auto;" rows="17"></textarea>
+    <div style="position:fixed;left:1200px;top:10px;max-width: 350px;font-family: arial,sans-serif;" id="cvsprocessor">
+        <div style="background-color:white;padding:20px;max-height: calc(100vh / 2)"> Collez directement le contenu du fichier CSV <b>de 10 colonnes</b> ici <textarea id="csvTextarea" style="display: block;width: 100%;margin: 10px auto;" rows="17"></textarea>
             <div>
                 <button onclick="processCSV()">Process</button>
                 <button onclick="printDiv('page')">Print</button>
             </div>
         </div>
+
+        <div style="margin-top: 10px;max-height: calc(100vh / 2);overflow-y: scroll;" id="csvresult">
+        </div>
     </div>
     <div class="pagecontainer" style="position:absolute; top:10px; left:380px;" id="page">
         
     </div>
+    <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>

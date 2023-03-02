@@ -1,6 +1,13 @@
+function printDiv(divName) {
+	let filename = `ATTESTATION - ${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
+	document.title = filename;
+	window.print();
+	document.title = "Crétateur des attestations de stage - ITQAN Labs";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 	const pageContainer = document.getElementById("page");
-	pageContainer.innerHTML += buildPage() + buildPage();
+	pageContainer.innerHTML += buildPage();
 	const csvTextarea = document.getElementById("csvTextarea");
 	const internshipprocessor = document.getElementById("internshipprocessor");
 
@@ -22,10 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (csvTextarea.value.trim().length > 0) {
 			disableFormControls();
 			pageContainer.innerHTML = "";
+			document.getElementById("csvresult").innerHTML = "";
 			processCSV(csvTextarea.value);
 		} else {
 			enableFormControls();
 			pageContainer.innerHTML = "";
+			document.getElementById("csvresult").innerHTML = "";
 			pageContainer.innerHTML += buildPage();
 		}
 	});
@@ -71,107 +80,161 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		}
 	}
-});
 
-function formatDate(dateValue) {
-	let date;
-	if (typeof dateValue === "string") {
-		const [day, month, year] = dateValue.split("/");
-		date = new Date(`${year}-${month}-${day}`);
-	} else {
-		date = new Date(dateValue);
-	}
-
-	const formattedDate = new Intl.DateTimeFormat("fr-TN", {
-		month: "long",
-		day: "numeric",
-		year: "numeric",
-	}).format(date);
-	return formattedDate;
-}
-
-function printDiv(divName) {
-	let filename = `ATTESTATION - ${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
-	document.title = filename;
-	window.print();
-	document.title = "Crétateur des attestations de stage - ITQAN Labs";
-}
-
-function processCSV(csvString) {
-	const csvTextarea = document.getElementById("csvTextarea");
-
-	try {
-		const expectedHeaders = ["prenom", "nom", "genre", "cin", "niveau", "etablissement", "typeStage", "titreProjet", "dateDebut", "dateFin"];
-		const rows = Papa.parse(csvString, { header: true, skipEmptyLines: true }).data;
-
-		const headers = Object.keys(rows[0]);
-		if (!headers.every((header, i) => header === expectedHeaders[i])) {
-			csvTextarea.style.border = "4px solid red";
-			throw new Error("Invalid header row");
+	function formatDate(dateValue) {
+		let date;
+		if (typeof dateValue === "string") {
+			const [day, month, year] = dateValue.split("/");
+			date = new Date(`${year}-${month}-${day}`);
+		} else {
+			date = new Date(dateValue);
 		}
 
-		rows.forEach((r) => {
-			const row = Object.values(r);
-
-			const pageContainer = document.getElementById("page");
-			pageContainer.innerHTML += buildPage(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
-		});
-	} catch (error) {
-		console.error("Error processing CSV:", error);
+		const formattedDate = new Intl.DateTimeFormat("fr-TN", {
+			month: "long",
+			day: "numeric",
+			year: "numeric",
+		}).format(date);
+		return formattedDate;
 	}
-}
 
-function exportToPdf(mydiv) {
-	var doc = new jsPDF();
-	var elementHandler = {
-		"#ignorePDF": function (element, renderer) {
-			return true;
-		},
-	};
-	var source = window.document.getElementById(mydiv);
-	doc.fromHTML(source, 15, 15, {
-		width: 180,
-		elementHandlers: elementHandler,
-	});
-	let filename = `${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
-	let finalizedFilename = filename.replace(" ", "");
-	doc.save(finalizedFilename);
-}
+	function processCSV(csvString) {
+		const csvTextarea = document.getElementById("csvTextarea");
 
-function lowercaseString(str) {
-	let upperCount = 0;
-	for (let i = 0; i < str.length; i++) {
-		if (str[i] === str[i].toUpperCase()) {
-			upperCount++;
-			if (upperCount > 1) {
-				return str;
+		try {
+			const expectedHeaders = ["prenom", "nom", "genre", "cin", "niveau", "etablissement", "typeStage", "titreProjet", "dateDebut", "dateFin"];
+			const rows = Papa.parse(csvString, { header: true, skipEmptyLines: true }).data;
+
+			const headers = Object.keys(rows[0]);
+			if (!headers.every((header, i) => header === expectedHeaders[i])) {
+				csvTextarea.style.border = "4px solid red";
+				throw new Error("Invalid header row");
+			}
+			let i = 0;
+
+			rows.forEach((r) => {
+				const row = Object.values(r);
+				i++;
+
+				if (i === 1) {
+					pageContainer.innerHTML = buildPage(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
+				}
+
+			
+				const label = document.createElement("label");
+				label.setAttribute("for", `csvresult_radio_${i}`);
+				label.setAttribute("style", "display:block;background-color:white;padding:10px;margin-top: 10px;border:3px solid #38937d;");
+				label.setAttribute("id", `csvresult_${i}`);
+
+
+
+				const input = document.createElement("input");
+				input.setAttribute("type", "radio");
+				input.setAttribute("name", "csvresult_radio");
+				input.setAttribute("id", `csvresult_radio_${i}`);
+				input.setAttribute("value", `${i}`);
+				input.setAttribute("style", "cursor:pointer;");
+				if (i === 1) {
+					input.setAttribute("checked", 'true');
+				}
+
+				const b = document.createElement("b");
+				b.innerHTML = `Stagiaire ${i}:`;
+
+				const span = document.createElement("span");
+				span.setAttribute("style", "background-color:yellow;");
+				span.innerHTML = `${row[0]} ${row[1]}`;
+
+				const br = document.createElement("br");
+
+				const etab = document.createElement("b");
+				etab.innerHTML = `Etablissement:`;
+
+				const etabValue = document.createTextNode(` ${row[5]}`);
+
+				label.appendChild(input);
+				label.appendChild(b);
+				label.appendChild(span);
+				label.appendChild(br);
+				label.appendChild(etab);
+				label.appendChild(etabValue);
+
+				document.getElementById("csvresult").appendChild(label);
+
+				let currentRadio = document.getElementById(`csvresult_radio_${i}`);
+				//console.log(currentRadio);
+
+				try {
+					label.addEventListener("change", function (e) {
+						if (e.target.checked) {
+							console.log("clicked");
+							pageContainer.innerHTML = buildPage(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
+						}
+						console.log(e);
+					});
+				} catch (error) {
+					console.log(error);
+				}
+
+				csvTextarea.style.border = "3px solid #38937d";
+			});
+		} catch (error) {
+			console.error("Error processing CSV:", error);
+			csvTextarea.style.border = "4px solid red";
+		}
+	}
+
+	function exportToPdf(mydiv) {
+		var doc = new jsPDF();
+		var elementHandler = {
+			"#ignorePDF": function (element, renderer) {
+				return true;
+			},
+		};
+		var source = window.document.getElementById(mydiv);
+		doc.fromHTML(source, 15, 15, {
+			width: 180,
+			elementHandlers: elementHandler,
+		});
+		let filename = `${$(".name_text").val()}${$(".lastname_text").val()}_stage${$(".typestage_text").val()}.pdf`;
+		let finalizedFilename = filename.replace(" ", "");
+		doc.save(finalizedFilename);
+	}
+
+	function lowercaseString(str) {
+		let upperCount = 0;
+		for (let i = 0; i < str.length; i++) {
+			if (str[i] === str[i].toUpperCase()) {
+				upperCount++;
+				if (upperCount > 1) {
+					return str;
+				}
 			}
 		}
+		return str.toLowerCase();
 	}
-	return str.toLowerCase();
-}
 
-function addPrefixDE(s) {
-	let str = lowercaseString(s);
-	const firstLetter = str.charAt(0).toLowerCase();
-	if (["a", "e", "i", "o", "u"].includes(firstLetter)) {
-		return `d'${str}`;
-	} else {
-		return `de ${str}`;
+	function addPrefixDE(s) {
+		let str = lowercaseString(s);
+		const firstLetter = str.charAt(0).toLowerCase();
+		if (["a", "e", "i", "o", "u"].includes(firstLetter)) {
+			return `d'${str}`;
+		} else {
+			return `de ${str}`;
+		}
 	}
-}
 
-function traiterCIN(num) {
-	const str = num.toString();
-	if (str.length === 7) {
-		return `0${str}`;
-	} else {
-		return str;
+	function traiterCIN(num) {
+		const str = num.toString();
+		if (str.length === 7) {
+			return `0${str}`;
+		} else {
+			return str;
+		}
 	}
-}
 
-function buildPage(prenom = "Ahmed", nom = "Nefzaoui", genre = "M", cin = "12345678", niveau = "3ème année", etablissement = "Institut Supérieur des Etudes Technologiques de Tozeur", typeStage = "PFE", titreProjet = null, dateDebut = "01/03/2023", dateFin = "01/04/2023") {
-	return `
+	function buildPage(prenom = "Ahmed", nom = "Nefzaoui", genre = "M", cin = "12345678", niveau = "3ème année", etablissement = "Institut Supérieur des Etudes Technologiques de Tozeur", typeStage = "PFE", titreProjet = null, dateDebut = "01/03/2023", dateFin = "01/04/2023") {
+		return `
 		<div id="onePage">
             <div id="header" style="padding: 10mm;">
                 <table width="100%">
@@ -314,4 +377,5 @@ function buildPage(prenom = "Ahmed", nom = "Nefzaoui", genre = "M", cin = "12345
             </div>
         </div>
 	`;
-}
+	}
+});
