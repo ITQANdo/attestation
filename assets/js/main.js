@@ -98,30 +98,22 @@ function printDiv(divName) {
 }
 
 function processCSV(csvString) {
+	const csvTextarea = document.getElementById("csvTextarea");
+
 	try {
 		const expectedHeaders = ["prenom", "nom", "genre", "cin", "niveau", "etablissement", "typeStage", "titreProjet", "dateDebut", "dateFin"];
 		const rows = Papa.parse(csvString, { header: true, skipEmptyLines: true }).data;
 
-		// Check if header row is valid
 		const headers = Object.keys(rows[0]);
 		if (!headers.every((header, i) => header === expectedHeaders[i])) {
+			csvTextarea.style.border = "4px solid red";
 			throw new Error("Invalid header row");
 		}
 
-		console.log(rows.length);
-		// Process each row
 		rows.forEach((r) => {
 			const row = Object.values(r);
-			// Check if row has all required data
-			// if (!row.column1 || !row.column2 || !row.column3 || !row.column4 || !row.column5 || !row.column6 || !row.column7 || !row.column8 || !row.column9 || !row.column10) {
-			//   console.error(`Row ${row} has missing data`);
-			//   return;
-			// }
-			console.log(row);
 
-			// Call buildPage with row data as parameters
 			const pageContainer = document.getElementById("page");
-			console.log(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
 			pageContainer.innerHTML += buildPage(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
 		});
 	} catch (error) {
