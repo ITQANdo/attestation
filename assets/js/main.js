@@ -112,6 +112,39 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 			let i = 0;
 
+				let label = document.createElement("label");
+				label.setAttribute("for", `csvresult_radio_all`);
+				label.setAttribute("style", "display:block;background-color:white;padding:10px;margin-top: 10px;border:3px solid #38937d;");
+				label.setAttribute("id", `csvresult_all`);
+
+
+
+				let input = document.createElement("input");
+				input.setAttribute("type", "radio");
+				input.setAttribute("name", "csvresult_radio");
+				input.setAttribute("id", `csvresult_radio_all`);
+				input.setAttribute("value", `all`);
+				input.setAttribute("style", "cursor:pointer;");
+
+				let b = document.createElement("b");
+				b.innerHTML = `Tous les stagiaires`;
+
+				label.appendChild(input);
+				label.appendChild(b);
+				document.getElementById("csvresult").appendChild(label);
+
+				label.addEventListener("change", function (e) {
+					if (e.target.checked) {
+						console.log("clicked");
+						pageContainer.innerHTML = "";
+						rows.forEach((r) => {
+							const row = Object.values(r);
+							pageContainer.innerHTML += buildPage(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]);
+						});
+					}
+					console.log(e);
+				});
+
 			rows.forEach((r) => {
 				const row = Object.values(r);
 				i++;
@@ -121,14 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
 				}
 
 			
-				const label = document.createElement("label");
+				let label = document.createElement("label");
 				label.setAttribute("for", `csvresult_radio_${i}`);
 				label.setAttribute("style", "display:block;background-color:white;padding:10px;margin-top: 10px;border:3px solid #38937d;");
 				label.setAttribute("id", `csvresult_${i}`);
 
 
 
-				const input = document.createElement("input");
+				let input = document.createElement("input");
 				input.setAttribute("type", "radio");
 				input.setAttribute("name", "csvresult_radio");
 				input.setAttribute("id", `csvresult_radio_${i}`);
@@ -160,9 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				label.appendChild(etabValue);
 
 				document.getElementById("csvresult").appendChild(label);
-
-				let currentRadio = document.getElementById(`csvresult_radio_${i}`);
-				//console.log(currentRadio);
 
 				try {
 					label.addEventListener("change", function (e) {
