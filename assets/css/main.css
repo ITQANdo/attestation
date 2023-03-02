@@ -21,7 +21,8 @@ body {
 	background: rgb(204, 204, 204);
 }
 
-page {
+div#onePage {
+	position: relative;
 	background: white;
 	display: block;
 	width: 210mm;
@@ -81,6 +82,7 @@ td {
 	#cvsprocessor,
 	#internshipprocessor {
 		display: none;
+		visibility: hidden;
 	}
 
 	#page,
@@ -89,7 +91,7 @@ td {
 	}
 
 	#page {
-		position: absolute;
+		display: block;
 		top: 0 !important;
 		right: 0;
 		bottom: 0;
